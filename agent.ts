@@ -34,7 +34,8 @@ export class Agent {
     }
     throw new Error("到達されないはずのプログラムが実行されました。");
   }
-  learn(environment: Environment): number {
+  learn(environment: Environment): number[] {
+    const ret = [environment.getEvaluationValue()];
     let previousRuleString: string | undefined;
     for (let i = 0; i < 1000; i++) {
       const state = environment.getState();
@@ -58,7 +59,8 @@ export class Agent {
         (this.#values.get(previousRuleString) ?? 0) + reward,
       );
       this.#time++;
+      ret.push(environment.getEvaluationValue());
     }
-    return environment.getEvaluationValue();
+    return ret;
   }
 }
