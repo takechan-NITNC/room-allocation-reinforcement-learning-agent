@@ -12,13 +12,11 @@ export class Agent {
   #choose(environment: Environment): Action {
     const exps = new Map<string, number>();
     for (const action of environment.allowedActions) {
-      const ruleString = JSON.stringify(
-        new Rule(environment.getState(), action),
-      );
       exps.set(
-        ruleString,
+        JSON.stringify(action),
         Math.exp(
-          (this.#values.get(ruleString) ?? 0) / this.#temperature(this.#time),
+          (this.#values.get(JSON.stringify(action)) ?? 0) /
+            this.#temperature(this.#time),
         ),
       );
     }
@@ -27,9 +25,7 @@ export class Agent {
       return previous + current;
     });
     for (const action of environment.allowedActions) {
-      random -=
-        exps.get(JSON.stringify(new Rule(environment.getState(), action)))! /
-        denominator;
+      random -= exps.get(JSON.stringify(action))! / denominator;
       if (random < 0) {
         return action;
       }
