@@ -52,23 +52,23 @@ Deno.test({
         }
       }
     }
-    assertStrictEquals(
-      new Agent(0.01, function (t) {
-        return 1 / Math.log(t + 1.1);
-      }).learn(
-        new Environment(
-          new Set(people),
-          1,
-          -1,
-          0,
-          2,
-          1,
-          function (_happinesses) {
-            return 5;
-          },
-        ),
+    const got = new Agent(0.01, function (t) {
+      return 1 / Math.log(t + 1.1);
+    }).learn(
+      new Environment(
+        new Set(people),
+        1,
+        -1,
+        0,
+        2,
+        1,
+        function (_happinesses) {
+          return 5;
+        },
       ),
-      5,
     );
+    for (const element of got) {
+      assertStrictEquals(element, 5);
+    }
   },
 });
