@@ -15,7 +15,9 @@ export class Agent {
       exps.set(
         JSON.stringify(action),
         Math.exp(
-          (this.#values.get(JSON.stringify(action)) ?? 0) /
+          (this.#values.get(
+            JSON.stringify(new Rule(environment.getState(), action)),
+          ) ?? 0) /
             this.#temperature(this.#time),
         ),
       );
