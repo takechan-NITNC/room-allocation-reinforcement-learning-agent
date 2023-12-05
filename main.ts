@@ -2,7 +2,7 @@ import { Agent } from "./agent.ts";
 import { Environment, Person } from "./deps.ts";
 for (let i = 0; i < 100; i++) {
   const agent = new Agent(0.01, function (time) {
-    return 3 / Math.log(time + 1.1);
+    return 4 / Math.log(time + 1.1);
   });
   for (let j = 0; j < 1000; j++) {
     const people = new Set<Person>();
